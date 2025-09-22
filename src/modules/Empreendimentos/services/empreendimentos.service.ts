@@ -1,24 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { Empreendimentos } from '../entities/empreedimentos.entity';
+import { Empreendimento } from '../entities/empreedimento.entity';
 
 @Injectable()
 export class EmpreendimentosServices{
-    private empreendimentos: Empreendimentos[] = [];
+    private empreendimentos: Empreendimento[] = [];
 
-    create(empreendimentos: Partial<Empreendimentos>): Empreendimentos {
-        const newEmprendimentos: Empreendimentos = {
+    create(empreendimentos: Partial<Empreendimento>): Empreendimento {
+        const newEmprendimentos: Empreendimento = {
           id: this.empreendimentos.length + 1,
           ...empreendimentos,
-        } as Empreendimentos;
+        } as Empreendimento;
         this.empreendimentos.push(newEmprendimentos);
         return newEmprendimentos;
       }
     
-      findAll(): Empreendimentos[] {
+      findAll(): Empreendimento[] {
         return this.empreendimentos;
       }
     
-      findById(id: number): Empreendimentos | undefined {
+      findById(id: number): Empreendimento | undefined {
         return this.empreendimentos.find(u => u.id === id);
       }
 }

@@ -1,9 +1,12 @@
-import { Usuarios } from './modules/Usuarios/entities/usuarios.entity';
+import { Usuario } from './modules/Usuarios/entities/usuario.entity';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuariosModule } from './modules/Usuarios/usuarios.module'
 import { EmpreendimentosModule } from './modules/Empreendimentos/empreendimentos.module';
+import { UnidadesModule } from './modules/Unidades/unidades.module';
+import { Empreendimento } from './modules/Empreendimentos/entities/empreedimento.entity';
+import { Unidade } from './modules/Unidades/entities/unidade.entity';
 
 @Module({
   imports: [
@@ -15,11 +18,12 @@ import { EmpreendimentosModule } from './modules/Empreendimentos/empreendimentos
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [Usuarios],
+      entities: [Usuario,Empreendimento,Unidade],
       synchronize: false,
     }),
     UsuariosModule,
-    EmpreendimentosModule
+    EmpreendimentosModule,
+    UnidadesModule
   ],
 })
 export class AppModule {}
