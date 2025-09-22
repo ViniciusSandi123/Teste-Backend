@@ -1,4 +1,5 @@
-import { Usuarios } from '../modules/Usuarios/entities/usuarios.enity';
+import { Empreendimentos } from './../modules/Empreendimentos/entities/empreedimentos.entity';
+import { Usuarios } from '../modules/Usuarios/entities/usuarios.entity';
 import { DataSource } from 'typeorm';
 import * as dotenv from 'dotenv';
 
@@ -11,7 +12,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  entities: [Usuarios],
+  entities: [Usuarios,Empreendimentos],
   migrations: ['src/migrations/*.ts'],
   synchronize: false,
 });
