@@ -1,24 +1,42 @@
-import { Injectable } from '@nestjs/common';
-import { Empreendimento } from '../entities/empreendimento.entity';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { EmpreendimentoRepository } from '../repositories/empreendimentos.repository';
+import { CriarEmpreendimentoDto } from '../dtos/criarEmpreendimentoDto';
+import { EditarEmpreendimentoDto } from '../dtos/editarEmpreeendimentoDto';
+import { EmpreendimentoServiceInterface } from '../interfaces/empreendimento.service.interface';
 
 @Injectable()
-export class EmpreendimentosServices{
-    private empreendimentos: Empreendimento[] = [];
+export class EmpreendimentosService implements EmpreendimentoServiceInterface{
+  constructor(
+    private readonly empreendimentoRepository: EmpreendimentoRepository,
+  ) {}
 
-    create(empreendimentos: Partial<Empreendimento>): Empreendimento {
-        const newEmprendimentos: Empreendimento = {
-          id: this.empreendimentos.length + 1,
-          ...empreendimentos,
-        } as Empreendimento;
-        this.empreendimentos.push(newEmprendimentos);
-        return newEmprendimentos;
-      }
-    
-      findAll(): Empreendimento[] {
-        return this.empreendimentos;
-      }
-    
-      findById(id: number): Empreendimento | undefined {
-        return this.empreendimentos.find(u => u.id === id);
-      }
+  async criarEmpreendimento(data: CriarEmpreendimentoDto) {
+    return await this.empreendimentoRepository.adicionarEmpreendimento(data);
+  }
+
+  async buscarTodosEmpreendimentos() {
+    return await this.empreendimentoRepository.retornarTodosEmpreendimentos();
+  }
+
+  async buscarEmpreendimentoPorId(id: number) {
+    const empreendimento = await this.empreendimentoRepository.retornaEmpreendimentoPorId(id);
+    if (!empreendimento) {
+      throw new NotFoundException(`Empreendimento não encontrado`);
+    }
+    return empreendimento;
+  }
+
+  async editarEmpreendimento(id: number, data: EditarEmpreendimentoDto) {
+    const empreendimento = await this.empreendimentoRepository.editarEmpreendimento(id, data);
+    if (!empreendimento) {
+      throw new NotFoundException(`Empreendimento não encontrado`);
+    }
+    return empreendimento;
+  }
+
+  async excluirEmpreendimento(id: number) {
+    const empreendimento = await this.buscarEmpreendimentoPorId(id);
+    await this.empreendimentoRepository.excluirEmpreendimento(empreendimento.id);
+    return { message: `Empreendimento removido com sucesso` };
+  }
 }

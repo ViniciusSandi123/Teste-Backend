@@ -1,10 +1,14 @@
 import { Module } from '@nestjs/common';
-import { EmpreendimentosServices } from './services/empreendimentos.service';
+import { EmpreendimentosService } from './services/empreendimentos.service';
 import { EmprendimentosController } from './controllers/empreendimentos.controller';
+import { Empreendimento } from './entities/empreendimento.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { EmpreendimentoRepository } from './repositories/empreendimentos.repository';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([Empreendimento])],
   controllers: [EmprendimentosController],
-  providers: [EmpreendimentosServices],
-  exports: [EmpreendimentosServices],
+  providers: [EmpreendimentoRepository,EmpreendimentosService],
+  exports: [EmpreendimentosService],
 })
 export class EmpreendimentosModule {}
