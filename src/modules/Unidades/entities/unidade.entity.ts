@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column, OneToMany } from 'typeorm';
-import { Empreendimento } from '../../Empreendimentos/entities/empreedimento.entity';
+import { Empreendimento } from '../../Empreendimentos/entities/empreendimento.entity';
 import { StatusUnidade } from '../enums/StatusUnidade.enums';
 import { Favorito } from '../../Favoritos/entities/favorito.entity';
 

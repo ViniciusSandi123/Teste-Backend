@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuariosModule } from './modules/Usuarios/usuarios.module'
 import { EmpreendimentosModule } from './modules/Empreendimentos/empreendimentos.module';
 import { UnidadesModule } from './modules/Unidades/unidades.module';
-import { Empreendimento } from './modules/Empreendimentos/entities/empreedimento.entity';
+import { Empreendimento } from './modules/Empreendimentos/entities/empreendimento.entity';
 import { Unidade } from './modules/Unidades/entities/unidade.entity';
 import { FavoritosModule } from './modules/Favoritos/favoritos.module';
 import { Favorito } from './modules/Favoritos/entities/favorito.entity';

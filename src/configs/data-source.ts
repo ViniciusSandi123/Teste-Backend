@@ -1,4 +1,4 @@
-import { Empreendimento } from '../modules/Empreendimentos/entities/empreedimento.entity';
+import { Empreendimento } from '../modules/Empreendimentos/entities/empreendimento.entity';
 import { Usuario } from '../modules/Usuarios/entities/usuario.entity';
 import { DataSource } from 'typeorm';
 import * as dotenv from 'dotenv';
