@@ -1,16 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column, OneToMany } from 'typeorm';
 import { Empreendimento } from '../../Empreendimentos/entities/empreedimento.entity';
 import { StatusUnidade } from '../enums/Status-Unidade.enums';
+import { Favorito } from '../../Favoritos/entities/favorito.entity';
 
 @Entity('unidades')
 export class Unidade {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Empreendimento, empreendimento => empreendimento.unidades, {
-    onDelete: 'CASCADE', 
-    onUpdate: 'CASCADE',
-  })
+  @ManyToOne(() => Empreendimento, empreendimento => empreendimento.unidades, 
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   @JoinColumn({ name: 'empreendimento_id' })
   empreendimento: Empreendimento;
 
@@ -31,4 +30,7 @@ export class Unidade {
     default: StatusUnidade.DISPONIVEL,
   })
   status: StatusUnidade;
+
+  @OneToMany(() => Favorito, favorito => favorito.unidade)
+  favoritos: Favorito[];
 }

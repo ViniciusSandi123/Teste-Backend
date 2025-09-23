@@ -7,6 +7,8 @@ import { EmpreendimentosModule } from './modules/Empreendimentos/empreendimentos
 import { UnidadesModule } from './modules/Unidades/unidades.module';
 import { Empreendimento } from './modules/Empreendimentos/entities/empreedimento.entity';
 import { Unidade } from './modules/Unidades/entities/unidade.entity';
+import { FavoritosModule } from './modules/Favoritos/favoritos.module';
+import { Favorito } from './modules/Favoritos/entities/favorito.entity';
 
 @Module({
   imports: [
@@ -18,12 +20,13 @@ import { Unidade } from './modules/Unidades/entities/unidade.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [Usuario,Empreendimento,Unidade],
+      entities: [Usuario,Empreendimento,Unidade,Favorito],
       synchronize: false,
     }),
     UsuariosModule,
     EmpreendimentosModule,
-    UnidadesModule
+    UnidadesModule,
+    FavoritosModule
   ],
 })
 export class AppModule {}
