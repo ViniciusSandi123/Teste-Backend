@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Empreendimento } from "../entities/empreendimento.entity";
 import { EmpreendimentoRepositoryInterface } from "../interfaces/empreendimento.repository.interface";
@@ -20,8 +20,12 @@ export class EmpreendimentoRepository implements EmpreendimentoRepositoryInterfa
         return await this.repo.find();
     }
 
-    async retornaEmpreendimentoPorId(id: number) {
-        return await this.repo.findOne({ where: {id}}) ?? null;
+    async retornaEmpreendimentoPorId(id: number) : Promise<Empreendimento> {
+        const empreendimento = await this.repo.findOne({ where: {id}});
+        if (!empreendimento) {
+            throw new NotFoundException('Empreendimento não encontrado');
+        }
+        return empreendimento; 
     }
 
     async editarEmpreendimento(id: number, data: Partial<Empreendimento>) {

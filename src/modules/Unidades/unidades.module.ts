@@ -1,10 +1,18 @@
 import { Module } from '@nestjs/common';
-import { UnidadesServices } from './services/unidades.services';
+import { UnidadesService } from './services/unidades.services';
 import { UnidadesController } from './controllers/unidades.controller';
+import { Unidade } from './entities/unidade.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UnidadeRepository } from './repositories/unidades.repository';
+import { EmpreendimentosModule } from '../Empreendimentos/empreendimentos.module';
 
 @Module({
+  imports: [
+    TypeOrmModule.forFeature([Unidade]),
+    EmpreendimentosModule,
+  ],
   controllers: [UnidadesController],
-  providers: [UnidadesServices],
-  exports: [UnidadesServices],
+  providers: [UnidadeRepository,UnidadesService],
+  exports: [UnidadesService],
 })
 export class UnidadesModule {}

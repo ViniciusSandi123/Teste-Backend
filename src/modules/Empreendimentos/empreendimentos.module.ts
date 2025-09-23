@@ -9,6 +9,6 @@ import { EmpreendimentoRepository } from './repositories/empreendimentos.reposit
   imports: [TypeOrmModule.forFeature([Empreendimento])],
   controllers: [EmprendimentosController],
   providers: [EmpreendimentoRepository,EmpreendimentosService],
-  exports: [EmpreendimentosService],
+  exports: [EmpreendimentoRepository,EmpreendimentosService],
 })
 export class EmpreendimentosModule {}
