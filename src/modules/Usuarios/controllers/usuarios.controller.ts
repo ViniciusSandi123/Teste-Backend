@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Param, UsePipes, ValidationPipe, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Param, NotFoundException, UseGuards } from '@nestjs/common';
 import { UsuariosService } from '../services/usuarios.service';
-import { criarUsuarioDto } from '../../../auth/dtos/criarUsuarioDto';
-import { loginDto } from '../../../auth/dtos/loginDto';
 import { perfilUsuarioDto } from '../dtos/perfilUsuarioDto';
-import { ApiBody } from '@nestjs/swagger';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @Controller('usuarios')
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}

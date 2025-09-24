@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsuariosService } from '../../modules/Usuarios/services/usuarios.service';
 import { loginDto } from '../dtos/loginDto';
-import { JwtService } from '../jwt/jwt.service';
+import { JwtService } from '@nestjs/jwt';
 import { criarUsuarioDto } from 'src/auth/dtos/criarUsuarioDto';
 import { AuthServiceInterface } from '../interfaces/auth.service.interface';
 
@@ -17,7 +17,8 @@ export class AuthService implements AuthServiceInterface {
     if (!usuario) throw new UnauthorizedException('Credenciais inválidas');
 
     const payload = { sub: usuario.id, email: usuario.email };
-    return { access_token: this.jwtService.gerarToken(payload) };
+    const token = await this.jwtService.signAsync(payload);
+    return { access_token: token };
   }
 
   async criacaoUsuario(dto: criarUsuarioDto) {

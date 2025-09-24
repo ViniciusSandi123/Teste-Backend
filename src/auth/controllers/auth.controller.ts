@@ -3,7 +3,7 @@ import { AuthService } from '../services/auth.serivce';
 import { loginDto } from '../dtos/loginDto';
 import { criarUsuarioDto } from '../dtos/criarUsuarioDto';
 import { AuthGuard } from '../guards/auth.guard';
-import { ApiBody } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
@@ -21,8 +21,9 @@ export class AuthController {
     return this.authService.login(dto);
   }
 
-  @UseGuards(AuthGuard)
   @Get('me')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth() 
   getProfile(@Req() req) {
     return req.user;
   }

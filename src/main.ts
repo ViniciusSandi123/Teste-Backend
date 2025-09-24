@@ -9,6 +9,7 @@ async function bootstrap() {
     .setTitle('Teste Backend API')
     .setDescription('API do teste técnico')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

@@ -2,8 +2,10 @@ import { Controller, Post, Delete, Get, Body, Param, Query, UseGuards, Req } fro
 import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 import { FavoritosService } from '../services/favoritos.service';
 import { AdicionaFavoritoDto } from '../dtos/adicionaFavoritoDto';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 
 @ApiBearerAuth()
+@UseGuards(AuthGuard)
 @Controller('favoritos')
 export class FavoritosController {
   constructor(private readonly favoritosService: FavoritosService) {}
