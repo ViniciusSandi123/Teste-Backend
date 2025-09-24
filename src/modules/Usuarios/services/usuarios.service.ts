@@ -5,7 +5,6 @@ import { criarUsuarioDto } from '../dtos/criarUsuarioDto';
 import { loginDto } from '../dtos/loginDto';
 import { perfilUsuarioDto } from '../dtos/perfilUsuarioDto';
 import { UsuarioServiceInterface } from '../interfaces/usuario.service.interface';
-import { Usuario } from '../entities/usuario.entity';
 import { create } from 'domain';
 
 @Injectable()

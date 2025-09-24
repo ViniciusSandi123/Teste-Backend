@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsOptional, Max, Min } from 'class-validator';
-import { range } from 'rxjs';
+import { IsIn, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 
 export class CriarUnidadeDto {
   @ApiProperty({ example: 1 })
@@ -20,13 +19,12 @@ export class CriarUnidadeDto {
   @IsNumber()
   metro_quadrado: number;
 
-  @ApiProperty({ example: 1234567 })
+  @ApiProperty({ example: 1 })
   @IsNumber()
   preco: number;
 
-  @ApiProperty({ example: 1, description: 'Status: DISPONIVEL=1, RESERVADO=2, VENDIDO=3' })
+  @ApiProperty({ example: 1})
   @IsOptional()
-  @Min(1)
-  @Max(3)
+  @IsIn([1, 2, 3])
   status?: number;
 }

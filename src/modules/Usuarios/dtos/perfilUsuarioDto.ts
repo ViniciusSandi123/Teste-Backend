@@ -3,7 +3,7 @@ import { IsNotEmpty } from "class-validator";
 
 export class perfilUsuarioDto{
 
-    @ApiProperty({ example: 'int'})
+    @ApiProperty({ example: 1})
     @IsNotEmpty()
     id: number;
 

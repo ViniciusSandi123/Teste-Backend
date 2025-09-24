@@ -1,24 +1,22 @@
-import { Favorito } from '../../Favoritos/entities/favorito.entity';
 import { Injectable } from '@nestjs/common';
+import { FavoritoRepository } from '../repositories/favoritos.repository';
+import { AdicionaFavoritoDto } from '../dtos/adicionaFavoritoDto';
+import { FavoritoServiceInterface } from '../interfaces/favorito.service.interface';
 
 @Injectable()
-export class FavoritosServices{
-    private favoritos: Favorito[] = [];
+export class FavoritosService implements FavoritoServiceInterface {
+  constructor(private readonly favoritoRepository: FavoritoRepository) {}
 
-    create(favoritos: Partial<Favorito>): Favorito {
-        const newFavoritos: Favorito = {
-          id: this.favoritos.length + 1,
-          ...favoritos,
-        } as Favorito;
-        this.favoritos.push(newFavoritos);
-        return newFavoritos;
-      }
-    
-      findAll(): Favorito[] {
-        return this.favoritos;
-      }
-    
-      findById(id: number): Favorito | undefined {
-        return this.favoritos.find(u => u.id === id);
-      }
+  async marcarFavorito(usuarioId: number, dto: AdicionaFavoritoDto) {
+    return await this.favoritoRepository.adicionarFavorito(usuarioId, dto.unidadeId);
+  }
+
+  async desmarcarFavorito(usuarioId: number, unidadeId: number) {
+    await this.favoritoRepository.removerFavorito(usuarioId, unidadeId);
+    return { message: 'Favorito removido com sucesso' };
+  }
+
+  async listarFavoritos(usuarioId: number, page = 1, limit = 10) {
+    return await this.favoritoRepository.listarFavoritos(usuarioId, page, limit);
+  }
 }

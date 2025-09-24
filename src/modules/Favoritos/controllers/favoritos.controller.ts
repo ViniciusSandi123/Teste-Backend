@@ -1,23 +1,26 @@
-import { Favorito } from '../../Favoritos/entities/favorito.entity';
-import { FavoritosServices } from './../services/favoritos.service';
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Post, Delete, Get, Body, Param, Query, UseGuards, Req } from '@nestjs/common';
+import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
+import { FavoritosService } from '../services/favoritos.service';
+import { AdicionaFavoritoDto } from '../dtos/adicionaFavoritoDto';
 
+@ApiBearerAuth()
 @Controller('favoritos')
 export class FavoritosController {
-  constructor(private readonly favoritosService: FavoritosServices) {}
+  constructor(private readonly favoritosService: FavoritosService) {}
 
   @Post()
-  criarUsuario(@Body() favoritos: Partial<Favorito>): Favorito {
-    return this.favoritosService.create(favoritos);
+  @ApiBody({ type: AdicionaFavoritoDto })
+  async marcar(@Req() req, @Body() dto: AdicionaFavoritoDto) {
+    return this.favoritosService.marcarFavorito(req.user.id, dto);
+  }
+
+  @Delete(':unidadeId')
+  async desmarcar(@Req() req, @Param('unidadeId') unidadeId: number) {
+    return this.favoritosService.desmarcarFavorito(req.user.id, unidadeId);
   }
 
   @Get()
-  retornaTodosEmpreendimentos(): Favorito[] {
-    return this.favoritosService.findAll();
-  }
-
-  @Get(':id')
-  retornaEmpreendimentosPorId(@Param('id') id: string): Favorito | undefined {
-    return this.favoritosService.findById(Number(id));
+  async listar(@Req() req, @Query('page') page = 1, @Query('limit') limit = 10) {
+    return this.favoritosService.listarFavoritos(req.user.id, Number(page), Number(limit));
   }
 }
