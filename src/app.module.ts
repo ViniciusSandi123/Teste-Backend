@@ -10,6 +10,7 @@ import { Unidade } from './modules/Unidades/entities/unidade.entity';
 import { FavoritosModule } from './modules/Favoritos/favoritos.module';
 import { Favorito } from './modules/Favoritos/entities/favorito.entity';
 import { AuthModule } from './auth/auth.module';
+import { RelatoriosModule } from './modules/Relatorios/relatorios.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AuthModule } from './auth/auth.module';
     EmpreendimentosModule,
     UnidadesModule,
     FavoritosModule,
+    RelatoriosModule,
     AuthModule
   ],
 })
