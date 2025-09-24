@@ -1,8 +1,8 @@
 import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UsuarioRepository } from '../repositories/usuarios.repository';
-import { criarUsuarioDto } from '../dtos/criarUsuarioDto';
-import { loginDto } from '../dtos/loginDto';
+import { criarUsuarioDto } from '../../../auth/dtos/criarUsuarioDto';
+import { loginDto } from '../../../auth/dtos/loginDto';
 import { perfilUsuarioDto } from '../dtos/perfilUsuarioDto';
 import { UsuarioServiceInterface } from '../interfaces/usuario.service.interface';
 import { create } from 'domain';

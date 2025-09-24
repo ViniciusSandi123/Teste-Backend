@@ -1,5 +1,5 @@
-import { criarUsuarioDto } from './../dtos/criarUsuarioDto';
-import { loginDto } from '../dtos/loginDto';
+import { criarUsuarioDto } from '../../../auth/dtos/criarUsuarioDto';
+import { loginDto } from '../../../auth/dtos/loginDto';
 import { perfilUsuarioDto } from '../dtos/perfilUsuarioDto';
 
 export interface UsuarioServiceInterface {
