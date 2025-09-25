@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial, Repository } from 'typeorm';
 import { Favorito } from '../entities/favorito.entity';
 import { FavoritoRepositoryInterface } from '../interfaces/favorito.repository.interface';
-import { Usuario } from 'src/modules/Usuarios/entities/usuario.entity';
-import { Unidade } from 'src/modules/Unidades/entities/unidade.entity';
+import { Usuario } from '../../Usuarios/entities/usuario.entity';
+import { Unidade } from '../../Unidades/entities/unidade.entity';
 
 @Injectable()
 export class FavoritoRepository implements FavoritoRepositoryInterface {

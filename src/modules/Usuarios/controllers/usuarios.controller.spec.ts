@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsuariosController } from './usuarios.controller';
 import { UsuariosService } from '../services/usuarios.service';
 import { perfilUsuarioDto } from '../dtos/perfilUsuarioDto';
+import { AuthGuard } from '../../../auth/guards/auth.guard';
 
 describe('UsuariosController', () => {
   let controller: UsuariosController;
@@ -12,6 +13,10 @@ describe('UsuariosController', () => {
     obterPerfil: jest.fn(),
   };
 
+  const mockAuthGuard = {
+    canActivate: jest.fn(() => true),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsuariosController],
@@ -20,8 +25,15 @@ describe('UsuariosController', () => {
           provide: UsuariosService,
           useValue: mockService,
         },
+        {
+          provide: AuthGuard,
+          useValue: mockAuthGuard,
+        },
       ],
-    }).compile();
+    })
+    .overrideGuard(AuthGuard)
+    .useValue(mockAuthGuard)
+    .compile();
 
     controller = module.get<UsuariosController>(UsuariosController);
     service = module.get<UsuariosService>(UsuariosService);
@@ -41,11 +53,7 @@ describe('UsuariosController', () => {
   });
 
   it('deve retornar perfil do usuário', async () => {
-    const perfil: perfilUsuarioDto = {
-      id: 1,
-      nome: 'Vinicius',
-      email: 'vinicius@email.com'
-    };
+    const perfil: perfilUsuarioDto = { id: 1, nome: 'Vinicius', email: 'vinicius@email.com' };
     mockService.obterPerfil.mockResolvedValue(perfil);
 
     const result = await controller.obterPerfil(1);

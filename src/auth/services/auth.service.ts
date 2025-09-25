@@ -2,7 +2,7 @@ import { BadRequestException, HttpException, Injectable, UnauthorizedException }
 import { UsuariosService } from '../../modules/Usuarios/services/usuarios.service';
 import { loginDto } from '../dtos/loginDto';
 import { JwtService } from '@nestjs/jwt';
-import { criarUsuarioDto } from 'src/auth/dtos/criarUsuarioDto';
+import { criarUsuarioDto } from '../dtos/criarUsuarioDto';
 import { AuthServiceInterface } from '../interfaces/auth.service.interface';
 
 @Injectable()

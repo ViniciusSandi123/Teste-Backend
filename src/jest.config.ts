@@ -1,4 +1,4 @@
-import { Config } from 'jest';
+import type { Config } from 'jest';
 
 const config: Config = {
   preset: 'ts-jest',
@@ -10,6 +10,9 @@ const config: Config = {
     'ts-jest': {
       isolatedModules: true,
     },
+  },
+  moduleNameMapper: {
+    '^src/(.*)$': '<rootDir>/src/$1',
   },
 };
 

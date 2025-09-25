@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { FavoritoRepository } from './favoritos.repository';
 import { Favorito } from '../entities/favorito.entity';
-import { Usuario } from 'src/modules/Usuarios/entities/usuario.entity';
-import { Unidade } from 'src/modules/Unidades/entities/unidade.entity';
+import { Usuario } from '../../Usuarios/entities/usuario.entity';
+import { Unidade } from '../../Unidades/entities/unidade.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 

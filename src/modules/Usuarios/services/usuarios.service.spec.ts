@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsuariosService } from './usuarios.service';
 import { UsuarioRepository } from '../repositories/usuarios.repository';
-import { BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, ConflictException, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { criarUsuarioDto } from '../../../auth/dtos/criarUsuarioDto';
 import { loginDto } from '../../../auth/dtos/loginDto';
@@ -55,12 +55,13 @@ describe('UsuariosService', () => {
 
     it('deve retornar mensagem se email já estiver cadastrado', async () => {
       mockRepository.retornaUsuarioPorEmail.mockResolvedValue({ id: 1 });
-      const result = await service.criarUsuario({
-        nome: 'Vinicius',
-        email: 'vinicius@email.com',
-        senha: '123456',
-      });
-      expect(result).toEqual({ message: 'Email já cadastrado' });
+      await expect(
+        service.criarUsuario({
+          nome: 'Vinicius',
+          email: 'vinicius@email.com',
+          senha: '123456',
+        }),
+      ).rejects.toThrow(ConflictException);
     });
 
     it('deve lançar exceção ao falhar', async () => {

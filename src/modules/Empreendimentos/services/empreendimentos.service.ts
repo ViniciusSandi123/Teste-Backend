@@ -14,7 +14,7 @@ export class EmpreendimentosService implements EmpreendimentoServiceInterface{
     try {
       const retorno = await this.empreendimentoRepository.adicionarEmpreendimento(data);
       return retorno;
-    } catch (Error) {
+    } catch (error) {
       throw new BadRequestException('Erro ao criar Empreendimento');
     }
   }
@@ -23,7 +23,7 @@ export class EmpreendimentosService implements EmpreendimentoServiceInterface{
     try {
       const retorno = await this.empreendimentoRepository.retornarTodosEmpreendimentos();
       return retorno;
-    } catch (Erro) {
+    } catch (error) {
       throw new BadRequestException('Erro ao buscar todos Empreendimentos');
     }
   }
@@ -32,7 +32,7 @@ export class EmpreendimentosService implements EmpreendimentoServiceInterface{
     try {
       const retorno = await this.empreendimentoRepository.retornaEmpreendimentoPorId(id);
       return retorno;
-    } catch (Erro) {
+    } catch (error) {
       throw new BadRequestException('Erro ao buscar Empreendimento');
     }
   }
@@ -41,7 +41,7 @@ export class EmpreendimentosService implements EmpreendimentoServiceInterface{
     try {
       const retorno = await this.empreendimentoRepository.editarEmpreendimento(id, data);
       return retorno;
-    } catch (Erro) {
+    } catch (error) {
       throw new BadRequestException('Erro ao editar Empreendimento');
     }
   }
@@ -50,7 +50,7 @@ export class EmpreendimentosService implements EmpreendimentoServiceInterface{
     try {
       const empreendimento = await this.buscarEmpreendimentoPorId(id);
       await this.empreendimentoRepository.excluirEmpreendimento(empreendimento.id);
-    } catch (Erro) {
+    } catch (error) {
       throw new BadRequestException('Erro ao excluir Empreendimento');
     }
   }

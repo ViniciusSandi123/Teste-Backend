@@ -17,7 +17,7 @@ export class UnidadesService implements UnidadeServiceInterface {
       const empreendimento = await this.empreendimentoRepositoy.retornaEmpreendimentoPorId(dto.empreendimento_id);
       const retorno = await this.unidadeRepository.adicionarUnidade(dto, empreendimento);
       return retorno;
-    } catch (Erro) {
+    } catch (error) {
       throw new BadRequestException('Erro ao criar Unidade');
     }
   }
@@ -35,7 +35,7 @@ export class UnidadesService implements UnidadeServiceInterface {
     try {
       const retorno = await this.unidadeRepository.retornarTodasUnidades(filtros);
       return retorno;
-    } catch (Erro) {
+    } catch (error) {
       throw new BadRequestException('Erro ao buscar Unidades');
     }
   }
@@ -44,7 +44,7 @@ export class UnidadesService implements UnidadeServiceInterface {
     try {
       const retorno = await this.unidadeRepository.retornaUnidadePorId(id);
       return retorno;
-    } catch (Erro) {
+    } catch (error) {
       throw new BadRequestException('Erro ao buscar Unidade');
     }
   }
@@ -54,7 +54,7 @@ export class UnidadesService implements UnidadeServiceInterface {
       const empreendimento = await this.empreendimentoRepositoy.retornaEmpreendimentoPorId(dto.empreendimento_id!);
       const retorno = await this.unidadeRepository.editarUnidade(id, dto, empreendimento);
       return retorno;
-    } catch (Erro) {
+    } catch (error) {
       throw new BadRequestException('Erro ao editar Unidade');
     }
   }
@@ -64,7 +64,7 @@ export class UnidadesService implements UnidadeServiceInterface {
       const unidade = await this.buscarUnidadePorId(id);
       await this.unidadeRepository.excluirUnidade(unidade.id);
       return { message: 'Unidade removida com sucesso' };
-    } catch (Erro) {
+    } catch (error) {
       throw new BadRequestException('Erro ao excluir unidade');
     }
   }

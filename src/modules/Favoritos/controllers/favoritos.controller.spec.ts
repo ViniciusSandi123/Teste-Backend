@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { FavoritosController } from './favoritos.controller';
 import { FavoritosService } from '../services/favoritos.service';
 import { AdicionaFavoritoDto } from '../dtos/adicionaFavoritoDto';
+import { AuthGuard } from '../../../auth/guards/auth.guard';
 
 describe('FavoritosController', () => {
   let controller: FavoritosController;
@@ -15,16 +16,21 @@ describe('FavoritosController', () => {
 
   const mockReq = { user: { id: 42 } };
 
+  // Mock do AuthGuard
+  const mockAuthGuard = {
+    canActivate: jest.fn(() => true),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [FavoritosController],
       providers: [
-        {
-          provide: FavoritosService,
-          useValue: mockService,
-        },
+        { provide: FavoritosService, useValue: mockService },
       ],
-    }).compile();
+    })
+      .overrideGuard(AuthGuard) // Substitui o guard real pelo mock
+      .useValue(mockAuthGuard)
+      .compile();
 
     controller = module.get<FavoritosController>(FavoritosController);
     service = module.get<FavoritosService>(FavoritosService);

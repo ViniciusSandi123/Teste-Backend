@@ -2,7 +2,7 @@ import { Controller, Get, Param, NotFoundException, UseGuards } from '@nestjs/co
 import { UsuariosService } from '../services/usuarios.service';
 import { perfilUsuarioDto } from '../dtos/perfilUsuarioDto';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { AuthGuard } from '../../../auth/guards/auth.guard';
 import { Throttle } from '@nestjs/throttler';
 
 @ApiBearerAuth()
