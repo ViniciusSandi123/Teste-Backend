@@ -2,7 +2,7 @@ import { Usuario } from './modules/Usuarios/entities/usuario.entity';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsuariosModule } from './modules/Usuarios/usuarios.module'
+import { UsuariosModule } from './modules/Usuarios/usuarios.module';
 import { EmpreendimentosModule } from './modules/Empreendimentos/empreendimentos.module';
 import { UnidadesModule } from './modules/Unidades/unidades.module';
 import { Empreendimento } from './modules/Empreendimentos/entities/empreendimento.entity';
@@ -11,9 +11,12 @@ import { FavoritosModule } from './modules/Favoritos/favoritos.module';
 import { Favorito } from './modules/Favoritos/entities/favorito.entity';
 import { AuthModule } from './auth/auth.module';
 import { RelatoriosModule } from './modules/Relatorios/relatorios.module';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot({ throttlers: [{ limit: 4, ttl: 10 * 1000 }]}),
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -22,7 +25,7 @@ import { RelatoriosModule } from './modules/Relatorios/relatorios.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [Usuario,Empreendimento,Unidade,Favorito],
+      entities: [Usuario, Empreendimento, Unidade, Favorito],
       synchronize: false,
     }),
     UsuariosModule,
@@ -30,7 +33,13 @@ import { RelatoriosModule } from './modules/Relatorios/relatorios.module';
     UnidadesModule,
     FavoritosModule,
     RelatoriosModule,
-    AuthModule
+    AuthModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
   ],
 })
 export class AppModule {}
