@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UnidadesController } from './unidades.controller';
-import { UnidadesService } from '../services/unidades.services';
+import { UnidadesService } from '../services/unidades.service';
 import { CriarUnidadeDto } from '../dtos/criarUnidadeDto';
 import { EditarUnidadeDto } from '../dtos/editarUnidadeDto';
 

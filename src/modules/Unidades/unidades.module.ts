@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { UnidadesService } from './services/unidades.services';
+import { UnidadesService } from './services/unidades.service';
 import { UnidadesController } from './controllers/unidades.controller';
 import { Unidade } from './entities/unidade.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';

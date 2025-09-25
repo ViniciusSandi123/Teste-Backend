@@ -1,5 +1,5 @@
 import { Controller,Get,Post,Put,Delete,Body,Param,Query,ParseIntPipe,UsePipes,ValidationPipe } from '@nestjs/common';
-import { UnidadesService } from '../services/unidades.services';
+import { UnidadesService } from '../services/unidades.service';
 import { CriarUnidadeDto } from '../dtos/criarUnidadeDto';
 import { EditarUnidadeDto } from '../dtos/editarUnidadeDto';
 import { ApiTags, ApiBody, ApiQuery, ApiParam } from '@nestjs/swagger';

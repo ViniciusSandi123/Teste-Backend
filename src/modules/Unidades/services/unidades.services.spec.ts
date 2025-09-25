@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UnidadesService } from '../services/unidades.services';
+import { UnidadesService } from './unidades.service';
 import { UnidadeRepository } from '../repositories/unidades.repository';
 import { EmpreendimentoRepository } from '../../Empreendimentos/repositories/empreendimentos.repository';
 import { BadRequestException } from '@nestjs/common';
