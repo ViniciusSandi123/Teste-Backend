@@ -49,11 +49,11 @@ Estrutura do projeto:
 - src/seeds/populate.ts: Script para popular o banco
 
 Testes: 
-- Para rodar os testes de forma geral basta rodar npm instal que vai rodar todos os modulos
+- Para rodar os testes de forma geral basta rodar npm test que vai rodar todos os modulos
 e para rodar de forma particular:
-  npx jest src/auth    
-  npx jest src/modules/Empreendimentos
-  npx jest src/modules/Favoritos
-  npx jest src/modules/Usuarios
-  npx jest src/modules/Unidades
-  npx jest src/modules/Relatorios
+- npx jest src/auth
+- npx jest src/modules/Empreendimentos
+- npx jest src/modules/Favoritos
+- npx jest src/modules/Usuarios
+- npx jest src/modules/Unidades
+- npx jest src/modules/Relatorios
