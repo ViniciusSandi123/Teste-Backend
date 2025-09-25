@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsIn, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+import { IsEnum, IsIn, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+import { StatusUnidade } from '../enums/StatusUnidade.enums';
 
 export class CriarUnidadeDto {
   @ApiProperty({ example: 1 })
@@ -17,14 +18,17 @@ export class CriarUnidadeDto {
 
   @ApiProperty({ example: 1 })
   @IsNumber()
+  @IsNotEmpty()
   metro_quadrado: number;
 
   @ApiProperty({ example: 1 })
   @IsNumber()
+  @IsNotEmpty()
   preco: number;
 
   @ApiProperty({ example: 1})
   @IsOptional()
+  @IsEnum(StatusUnidade)
   @IsIn([1, 2, 3])
   status?: number;
 }
