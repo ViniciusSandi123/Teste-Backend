@@ -25,8 +25,8 @@ export class UnidadesController {
   @ApiQuery({ name: 'precoMax', required: false })
   @ApiQuery({ name: 'cidade', required: false })
   @ApiQuery({ name: 'empreendimentoId', required: false })
-  @ApiQuery({ name: 'page', required: false })
-  @ApiQuery({ name: 'limit', required: false })
+  @ApiQuery({ name: 'page', required: true, example: 1 })
+  @ApiQuery({ name: 'limit', required: true, example: 10 })
   @ApiQuery({ name: 'orderByPreco', required: false, enum: ['ASC', 'DESC'] })
   async listarUnidadesFiltros(
     @Query('status') status?: number,
