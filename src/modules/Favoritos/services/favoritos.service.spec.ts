@@ -47,7 +47,7 @@ describe('FavoritosService', () => {
     it('deve lançar exceção ao falhar', async () => {
       mockRepository.adicionarFavorito.mockRejectedValue(new Error());
       await expect(service.marcarFavorito(42, { unidadeId: 10 })).rejects.toThrow(
-        new BadRequestException('Erro ao gerar relatório por cidade'),
+        new BadRequestException('Erro ao marcar Favorito'),
       );
     });
   });
