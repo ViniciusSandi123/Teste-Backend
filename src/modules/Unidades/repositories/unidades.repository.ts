@@ -42,26 +42,32 @@ export class UnidadeRepository implements UnidadeRepositoryInterface {
     if (filtros?.precoMax !== undefined) query.andWhere('unidade.preco <= :precoMax', { precoMax: filtros.precoMax });
     if (filtros?.cidade) query.andWhere('empreendimento.cidade = :cidade', { cidade: filtros.cidade });
     if (filtros?.empreendimentoId) query.andWhere('unidade.empreendimento_id = :empreendimentoId', { empreendimentoId: filtros.empreendimentoId });
-
     if (filtros?.orderByPreco) query.orderBy('unidade.preco', filtros.orderByPreco);
 
-    if (filtros?.page !== undefined && filtros?.limit !== undefined) {
-      query.skip((filtros.page - 1) * filtros.limit).take(filtros.limit);
-    }
+    const page = filtros?.page ?? 1;
+    const limit = filtros?.limit ?? 10;
+    query.skip((page - 1) * limit).take(limit);
 
-    const queryUnidades = query.getMany();
+    const queryUnidades = await query.getMany();
+    if(queryUnidades.length === 0){
+      throw new NotFoundException('Nenhuma Unidade não encontrada');
+    }
     return queryUnidades;
   }
 
   async retornaUnidadePorId(id: number): Promise<Unidade> {
     const retorno = await this.repo.findOne({ where: { id }, relations: ['empreendimento', 'favoritos'] });
     if (!retorno){
-      throw new NotFoundException('Unidade não encontrado');
+      throw new NotFoundException('Unidade não encontrada');
     }
     return retorno;
   }
 
   async editarUnidade(id: number, data: Partial<Unidade>, empreendimento: Empreendimento): Promise<Unidade> {
+    const existente = await this.retornaUnidadePorId(id);
+    if(!existente){
+      throw new NotFoundException('Unidade não encontrada');
+    }
     const unidadeAtualizada: Partial<Unidade> = {
     torre: data.torre,
     numero: data.numero,
@@ -76,6 +82,10 @@ export class UnidadeRepository implements UnidadeRepositoryInterface {
   }
 
   async excluirUnidade(id: number): Promise<void> {
+    const existente = await this.retornaUnidadePorId(id);
+    if(!existente){
+      throw new NotFoundException('Unidade não encontrada');
+    }
     await this.repo.delete(id);
   }
 }

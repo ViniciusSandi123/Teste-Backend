@@ -1,5 +1,5 @@
 import { EmpreendimentoRepository } from './../../Empreendimentos/repositories/empreendimentos.repository';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { UnidadeRepository } from '../repositories/unidades.repository';
 import { UnidadeServiceInterface } from '../interfaces/unidade.service.interface';
 import { CriarUnidadeDto } from '../dtos/criarUnidadeDto';
@@ -13,8 +13,13 @@ export class UnidadesService implements UnidadeServiceInterface {
   ) {}
 
   async criarUnidade(dto: CriarUnidadeDto) {
-    const empreendimento = await this.empreendimentoRepositoy.retornaEmpreendimentoPorId(dto.empreendimento_id);
-    return await this.unidadeRepository.adicionarUnidade(dto, empreendimento);
+    try {
+      const empreendimento = await this.empreendimentoRepositoy.retornaEmpreendimentoPorId(dto.empreendimento_id);
+      const retorno = await this.unidadeRepository.adicionarUnidade(dto, empreendimento);
+      return retorno;
+    } catch (Erro) {
+      throw new BadRequestException('Erro ao criar Unidade');
+    }
   }
 
   async buscarTodasUnidades(filtros?: {
@@ -27,24 +32,40 @@ export class UnidadesService implements UnidadeServiceInterface {
     limit?: number;
     orderByPreco?: 'ASC' | 'DESC';
   }) {
-    return await this.unidadeRepository.retornarTodasUnidades(filtros);
+    try {
+      const retorno = await this.unidadeRepository.retornarTodasUnidades(filtros);
+      return retorno;
+    } catch (Erro) {
+      throw new BadRequestException('Erro ao buscar Unidades');
+    }
   }
 
   async buscarUnidadePorId(id: number) {
-    const unidade = await this.unidadeRepository.retornaUnidadePorId(id);
-    if (!unidade) throw new NotFoundException('Unidade não encontrada');
-    return unidade;
+    try {
+      const retorno = await this.unidadeRepository.retornaUnidadePorId(id);
+      return retorno;
+    } catch (Erro) {
+      throw new BadRequestException('Erro ao buscar Unidade');
+    }
   }
 
   async editarUnidade(id: number, dto: EditarUnidadeDto) {
-    const empreendimento = await this.empreendimentoRepositoy.retornaEmpreendimentoPorId(dto.empreendimento_id!);
-    const unidade = await this.unidadeRepository.editarUnidade(id, dto, empreendimento);
-    return unidade;
+    try {
+      const empreendimento = await this.empreendimentoRepositoy.retornaEmpreendimentoPorId(dto.empreendimento_id!);
+      const retorno = await this.unidadeRepository.editarUnidade(id, dto, empreendimento);
+      return retorno;
+    } catch (Erro) {
+      throw new BadRequestException('Erro ao editar Unidade');
+    }
   }
 
   async excluirUnidade(id: number) {
-    const unidade = await this.buscarUnidadePorId(id);
-    await this.unidadeRepository.excluirUnidade(unidade.id);
-    return { message: 'Unidade removida com sucesso' };
+    try {
+      const unidade = await this.buscarUnidadePorId(id);
+      await this.unidadeRepository.excluirUnidade(unidade.id);
+      return { message: 'Unidade removida com sucesso' };
+    } catch (Erro) {
+      throw new BadRequestException('Erro ao excluir unidade');
+    }
   }
 }

@@ -13,18 +13,12 @@ export class UsuariosController {
   @Get(':id')
   async buscarPorId(@Param('id') id: number) {
     const usuario = this.usuariosService.buscarPorId(id);
-    if(!usuario){
-      return { message: 'Usuario não encontrado' };
-    }
     return usuario;
   }
 
   @Get('perfil/:id')
   async obterPerfil(@Param('id') id: number): Promise<perfilUsuarioDto> {
     const usuario = this.usuariosService.obterPerfil(id);
-    if(!usuario){
-      throw new NotFoundException('Perfil não encontrado');
-    }
     return usuario;
   }
 }

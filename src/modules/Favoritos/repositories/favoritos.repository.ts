@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial, Repository } from 'typeorm';
 import { Favorito } from '../entities/favorito.entity';
@@ -34,6 +34,16 @@ export class FavoritoRepository implements FavoritoRepositoryInterface {
   }
 
   async removerFavorito(usuarioId: number, unidadeId: number): Promise<void> {
+    const existente = await this.repo.findOne({
+      where: { 
+        usuario: { id: usuarioId }, 
+        unidade: { id: unidadeId } 
+      }
+    });
+
+    if (!existente) {
+      throw new NotFoundException('Favorito não encontrado');
+    }
     await this.repo
       .createQueryBuilder()
       .delete()

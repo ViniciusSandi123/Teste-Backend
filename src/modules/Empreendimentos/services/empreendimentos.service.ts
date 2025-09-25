@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { EmpreendimentoRepository } from '../repositories/empreendimentos.repository';
 import { CriarEmpreendimentoDto } from '../dtos/criarEmpreendimentoDto';
 import { EditarEmpreendimentoDto } from '../dtos/editarEmpreeendimentoDto';
@@ -11,32 +11,47 @@ export class EmpreendimentosService implements EmpreendimentoServiceInterface{
   ) {}
 
   async criarEmpreendimento(data: CriarEmpreendimentoDto) {
-    return await this.empreendimentoRepository.adicionarEmpreendimento(data);
+    try {
+      const retorno = await this.empreendimentoRepository.adicionarEmpreendimento(data);
+      return retorno;
+    } catch (Error) {
+      throw new BadRequestException('Erro ao criar Empreendimento');
+    }
   }
 
   async buscarTodosEmpreendimentos() {
-    return await this.empreendimentoRepository.retornarTodosEmpreendimentos();
+    try {
+      const retorno = await this.empreendimentoRepository.retornarTodosEmpreendimentos();
+      return retorno;
+    } catch (Erro) {
+      throw new BadRequestException('Erro ao buscar todos Empreendimentos');
+    }
   }
 
   async buscarEmpreendimentoPorId(id: number) {
-    const empreendimento = await this.empreendimentoRepository.retornaEmpreendimentoPorId(id);
-    if (!empreendimento) {
-      throw new NotFoundException(`Empreendimento não encontrado`);
+    try {
+      const retorno = await this.empreendimentoRepository.retornaEmpreendimentoPorId(id);
+      return retorno;
+    } catch (Erro) {
+      throw new BadRequestException('Erro ao buscar Empreendimento');
     }
-    return empreendimento;
   }
 
   async editarEmpreendimento(id: number, data: EditarEmpreendimentoDto) {
-    const empreendimento = await this.empreendimentoRepository.editarEmpreendimento(id, data);
-    if (!empreendimento) {
-      throw new NotFoundException(`Empreendimento não encontrado`);
+    try {
+      const retorno = await this.empreendimentoRepository.editarEmpreendimento(id, data);
+      return retorno;
+    } catch (Erro) {
+      throw new BadRequestException('Erro ao editar Empreendimento');
     }
-    return empreendimento;
   }
 
   async excluirEmpreendimento(id: number) {
-    const empreendimento = await this.buscarEmpreendimentoPorId(id);
-    await this.empreendimentoRepository.excluirEmpreendimento(empreendimento.id);
-    return { message: `Empreendimento removido com sucesso` };
+    try {
+      const empreendimento = await this.buscarEmpreendimentoPorId(id);
+      await this.empreendimentoRepository.excluirEmpreendimento(empreendimento.id);
+    } catch (Erro) {
+      throw new BadRequestException('Erro ao excluir Empreendimento');
+    }
   }
 }

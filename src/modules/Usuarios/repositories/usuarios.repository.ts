@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Usuario } from '../entities/usuario.entity';
@@ -13,29 +13,19 @@ export class UsuarioRepository implements UsuarioRepositoryInterface{
     ){}
 
     async criarUsuario(data: Partial<Usuario>){
-        const entity = this.repo.create(data);
-        return await this.repo.save(entity);
-    }
-
-    async retornarTodosUsuarios(): Promise<Usuario[]> {
-        return await this.repo.find();
+        const usuario = this.repo.create(data);
+        return await this.repo.save(usuario);
     }
 
     async retornaUsuarioPorId(id: number) {
-        return await this.repo.findOne({ where: {id}}) ?? null;
+        const retorno = await this.repo.findOne({ where: {id}});
+        if(retorno === null){
+            throw new NotFoundException('Usuário não encontrado');
+        }
+        return retorno
     }
 
     async retornaUsuarioPorEmail(email: string){
         return await this.repo.findOne({ where: { email } }) ?? null;
-    }
-
-    async alterarUsuario(id: number, data: Partial<Usuario>) {
-        await this.repo.update(id, data);
-        const retorno = await this.retornaUsuarioPorId(id);
-        return retorno!;
-    }
-
-    async excluirUsuario(id: number){
-        await this.repo.delete(id);
     }
 }

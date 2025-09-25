@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { RelatoriosController } from '../Relatorios/controllers/Relatorios.controller';
+import { RelatoriosController } from './controllers/relatorios.controller';
 import { RelatoriosService } from '../Relatorios/services/relatorios.services';
 import { RelatoriosRepository } from '../Relatorios/repositories/relatorios.repository';
 
