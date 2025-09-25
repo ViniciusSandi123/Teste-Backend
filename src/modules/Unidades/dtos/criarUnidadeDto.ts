@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsIn, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+import { IsEnum, IsIn, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { StatusUnidade } from '../enums/StatusUnidade.enums';
 
 export class CriarUnidadeDto {
@@ -10,10 +10,12 @@ export class CriarUnidadeDto {
 
   @ApiProperty({ example: 'string' })
   @IsNotEmpty()
+  @IsString()
   torre: string;
 
   @ApiProperty({ example: 'string' })
   @IsNotEmpty()
+  @IsString()
   numero: string;
 
   @ApiProperty({ example: 1 })

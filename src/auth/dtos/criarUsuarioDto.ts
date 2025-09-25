@@ -5,12 +5,14 @@ export class criarUsuarioDto{
     @ApiProperty({ example: 'string'})
     @IsNotEmpty()
     nome: string;
+
     @ApiProperty({ example: 'string'})
     @IsNotEmpty()
-    @IsEmail({}, { message: 'E-mail inválido' })
+    @IsEmail({})
     email: string;
+
     @ApiProperty({ example: 'string'})
     @IsNotEmpty()
-    @MinLength(4, { message: 'A senha deve ter no mínimo 4 caracteres' })
+    @MinLength(4)
     senha: string;
 }
