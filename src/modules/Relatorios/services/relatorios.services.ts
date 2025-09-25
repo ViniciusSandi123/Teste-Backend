@@ -11,7 +11,7 @@ export class RelatoriosService implements RelatorioServiceInterface {
   async relatorioUnidadePorStatus(): Promise<RelatorioStatusDto> {
     try {
       const resultado = await this.relRepo.queryUnidadePorStatus();
-      if(resultado.length === 0){
+      if (resultado.length === 0) {
         throw new NotFoundException('Nenhuma unidade encontrada');
       }
       const mapStatus = { 1: 'DISPONIVEL', 2: 'RESERVADO', 3: 'VENDIDO' };
@@ -20,21 +20,24 @@ export class RelatoriosService implements RelatorioServiceInterface {
         retorno[mapStatus[r.status]] = parseInt(r.total, 10);
       });
       return retorno;
-    } catch (Erro) {
-      throw new BadRequestException('Erro ao gerar relatório por cidade');
+    } catch (error) {
+      if (error instanceof NotFoundException) throw error;
+      throw new BadRequestException('Erro ao gerar relatório por status');
     }
   }
 
-  async relatorioUnidadePorCidade(): Promise<RelatorioCidadeDto[]> {
+    async relatorioUnidadePorCidade(): Promise<RelatorioCidadeDto[]> {
     try {
       const resultado = await this.relRepo.queryUnidadePorCidade();
-      if(resultado.length === 0){
+      if (resultado.length === 0) {
         throw new NotFoundException('Nenhuma unidade encontrada');
       }
-      const retorno = resultado.map(r => (
-          { cidade: r.cidade, total: parseInt(r.total, 10) }));
-      return retorno;
-    } catch (Erro) {
+      return resultado.map(r => ({
+        cidade: r.cidade,
+        total: parseInt(r.total, 10),
+      }));
+    } catch (error) {
+      if (error instanceof NotFoundException) throw error;
       throw new BadRequestException('Erro ao gerar relatório por cidade');
     }
   }
